@@ -58,12 +58,12 @@ inquirer
                         name: 'lastName'
                     },
                     {
-                        type: 'name',
+                        type: 'number',
                         message: 'role id',
                         name: 'role'
                     },
                     {
-                        type: 'name',
+                        type: 'number',
                         message: 'manager id', 
                         name: 'manager'
                     }
@@ -74,8 +74,38 @@ inquirer
                     pool.query(addEmployee, params, function(err, {rows}){
                         console.log(rows);
                     })
-                })
-        } else if(response === 'Update Employee Role'){
-            
+                });
+        } else if(response.mainMenu === 'Update Employee Role'){
+            inquirer
+                .prompt([
+                    {  
+                        type: 'number',
+                        message: 'employee id',
+                        name: 'name'
+                    },
+                    {
+                        type: 'number',
+                        message: 'role id',
+                        name: 'role'
+                    }
+                ])
+                .then((response) => {
+                    const updateEmployeeRole = new SqlFunctions().changeRole();
+                    const params = [response.role, response.name];
+                    pool.query(updateEmployeeRole, params, function(err, {rows}){
+                        console.log(rows);
+                    })
+                });
+        } else if(response.mainMenu === "View All Role"){
+            pool.query(sqlDisplay.role, function(err, {rows}){
+                console.table(rows);
+            });
+        } else if(response.mainMenu === "Add Role"){
+            // inquirer
+            //     .prompt([
+            //         {
+
+            //         }
+            //     ])
         }
     })
