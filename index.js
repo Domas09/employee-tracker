@@ -127,8 +127,24 @@ inquirer
                     })
                 })
         } else if(response.mainMenu === "View All Departments"){
-
+            pool.query(sqlDisplay.deparment, function(err, {rows}){
+                console.table(rows);
+            });
         } else if(response.mainMenu === "Add Department"){
-            
+            inquirer
+                .prompt([
+                    {
+                        type: "name",
+                        message: "department name",
+                        name: "department"
+                    }
+                ])
+                .then((response) => {
+                    const createDepartment = new SqlFunctions().createDepartment();
+                    const params = [response.department];
+                    pool.query(createDepartment, params, function(err, {rows}){
+                        console.log(rows);
+                    })
+                })
         }
     })
