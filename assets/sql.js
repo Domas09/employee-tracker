@@ -11,6 +11,9 @@ class SqlFunctions {
     changeRole(){
         return 'UPDATE employees SET role_id = $1 WHERE id = $2'
     }
+    createRole(){
+        return 'INSERT INTO roles (title, salary, department_id) VALUES ($1, $2, $3)'
+    }
 }
 
 module.exports = {sqlDisplay, SqlFunctions};

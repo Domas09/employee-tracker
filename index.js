@@ -101,11 +101,34 @@ inquirer
                 console.table(rows);
             });
         } else if(response.mainMenu === "Add Role"){
-            // inquirer
-            //     .prompt([
-            //         {
+            inquirer
+                .prompt([
+                    {
+                        type: 'name',
+                        message: 'Role title',
+                        name: 'title'
+                    },
+                    {
+                        type: 'number',
+                        message: 'salary',
+                        name: 'salary'
+                    },
+                    {
+                        type: 'number',
+                        message: 'department id',
+                        name: 'department'
+                    }
+                ])
+                .then((response) => {
+                    const createRole = new SqlFunctions().createRole();
+                    const params = [response.title, response.salary, response.department];
+                    pool.query(createRole, params, function(err, {rows}){
+                        console.log(rows);
+                    })
+                })
+        } else if(response.mainMenu === "View All Departments"){
 
-            //         }
-            //     ])
+        } else if(response.mainMenu === "Add Department"){
+            
         }
     })
